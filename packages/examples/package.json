@@ -1,0 +1,43 @@
+{
+    "name": "examples",
+    "version": "1.0.0",
+    "description": "graphql-wikipedia with different graphql server ",
+    "keywords": [
+        "graphql",
+        "wikipedia",
+        "graphql-wikipedia",
+        "wikiMediaAPI",
+        "apollo-server",
+        "apollo-server-express"
+    ],
+    "author": "tajpouria <tajpouria.dev@gmail.com>",
+    "homepage": "http://graphql-wikipedia.github.io",
+    "license": "ISC",
+    "main": "lib/examples.js",
+    "directories": {
+        "lib": "lib",
+        "test": "__tests__"
+    },
+    "files": [
+        "lib"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "github.com/tajpouria/graphql-wikipedia"
+    },
+    "scripts": {
+        "start:server": "nodemon --exec ts-node src/examples.ts",
+        "test": "echo \"Error: run tests from root\" && exit 1"
+    },
+    "dependencies": {
+        "@tajpouria/graphql-wikipedia": "^1.0.0",
+        "@types/express": "^4.17.1",
+        "apollo-server-express": "^2.9.5",
+        "dotenv": "^8.1.0",
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.3",
+        "ts-node": "^8.4.1"
+    }
+}

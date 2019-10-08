@@ -2,14 +2,9 @@ import "dotenv/config";
 import "reflect-metadata";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import { buildFederatedSchema } from "@apollo/federation";
-
-import { buildSchema } from "./utils/buildSchema";
 
 (async () => {
     const app = express();
-
-    const schema = (await buildSchema()) as any;
 
     const server = new ApolloServer({ schema });
 
@@ -19,11 +14,13 @@ import { buildSchema } from "./utils/buildSchema";
 
     if (port) {
         app.listen({ port }, (): void =>
-            console.log(`\n🚀 GraphQL is now running on port ${port}...`)
+            console.log(
+                `\n🚀 apollo-express-server is now running on port ${port}...`
+            )
         );
     } else {
         throw new Error(
-            `FATAL ERROR: while try to running server on port ${port}...`
+            `FATAL ERROR: while trying to run server on port ${port}...`
         );
     }
 })();
