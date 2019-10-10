@@ -1,28 +1,28 @@
-import {
-    makeExecutableSchema,
-    ITypeDefinitions,
-    IResolvers
-} from "graphql-tools";
+import { makeExecutableSchema, IResolvers, ITypedef } from "graphql-tools";
 import { merge } from "lodash";
 
 import { buildWikiTypeDefsAndResolvers } from "./buildWikiTypeDefsAndResolvers";
 
 export interface IWithWikiSchemaDefinitions<TContext = any> {
-    typeDefs: ITypeDefinitions;
+    typeDefs: ITypedef | ITypedef[];
     resolvers: IResolvers<any, TContext> | Array<IResolvers<any, TContext>>;
 }
 
 export const withWikiSchema = async ({
     typeDefs,
-    resolvers
+    resolvers,
 }: IWithWikiSchemaDefinitions) => {
     const {
-        typeDefs: _typeDefs,
-        resolvers: _resolvers
+        typeDefs: wikiTypeDefs,
+        resolvers: wikiResolvers,
     } = await buildWikiTypeDefsAndResolvers();
 
-    return makeExecutableSchema({
-        typeDefs: [_typeDefs, typeDefs],
-        resolvers: merge(_resolvers, resolvers)
-    });
+    const schema = {
+        typeDefs: Array.isArray(typeDefs)
+            ? [...typeDefs, wikiTypeDefs]
+            : [typeDefs, wikiTypeDefs],
+        resolvers: merge(resolvers, wikiResolvers),
+    };
+
+    return makeExecutableSchema(schema);
 };
