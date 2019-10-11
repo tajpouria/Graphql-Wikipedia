@@ -25,19 +25,15 @@
     },
     "scripts": {
         "start:tsc": "tsc -w",
+        "copy-static-assets": "ts-node copyStaticAssets.js",
         "test": "echo \"Error: run tests from root\" && exit 1"
-    },
-    "devDependencies": {
-        "@types/lodash": "^4.14.142",
-        "concurrently": "^5.0.0",
-        "nodemon": "^1.19.3"
     },
     "dependencies": {
         "axios": "^0.19.0",
+        "glob": "^7.1.4",
         "graphql": "^14.5.8",
-        "graphql-tools": "^4.0.5",
-        "lodash": "^4.17.15",
-        "reflect-metadata": "^0.1.13",
-        "type-graphql": "^0.17.5"
+        "graphql-tools": "^4.0.0",
+        "merge-graphql-schemas": "^1.7.0",
+        "reflect-metadata": "^0.1.13"
     }
 }

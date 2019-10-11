@@ -7,18 +7,23 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "start": "concurrently \"lerna run start:server --stream\" \"lerna run start:tsc --stream\"",
+        "start": "concurrently \"lerna run start:server --stream\" \"lerna run start:tsc\" \"lerna run copy-static-assets --stream\"",
         "bootstrap": "lerna bootstrap"
     },
     "devDependencies": {
         "@types/node": "^12.7.11",
+        "@types/shelljs": "^0.8.5",
         "@typescript-eslint/eslint-plugin": "^2.3.3",
         "@typescript-eslint/parser": "^2.3.3",
-        "concurrently": "^5.0.0",
         "eslint": "^6.5.1",
         "eslint-config-airbnb-base": "^14.0.0",
         "eslint-plugin-import": "^2.18.2",
         "lerna": "^3.16.5",
+        "ts-node": "^8.4.1",
         "typescript": "^3.6.3"
+    },
+    "dependencies": {
+        "concurrently": "^5.0.0",
+        "shelljs": "^0.8.3"
     }
 }

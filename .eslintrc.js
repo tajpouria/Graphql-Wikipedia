@@ -36,6 +36,9 @@ module.exports = {
         "function-paren-newline": "off",
         "max-len": "off",
         "arrow-parens": "off",
+        "global-require": "off",
+        "import/no-dynamic-require": "off",
+        "import/no-extraneous-dependencies": "off",
     },
     settings: {
         "import/resolver": {

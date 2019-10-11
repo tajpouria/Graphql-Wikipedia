@@ -1,14 +1,14 @@
 import "dotenv/config";
 import express from "express";
-import { ApolloServer } from "apollo-server-express";
-import { buildWikiTypeDefsAndResolvers } from "@tajpouria/graphql-wikipedia";
+import { ApolloServer, makeExecutableSchema } from "apollo-server-express";
+import { graphqlTypes, resolvers } from "@tajpouria/graphql-wikipedia";
 
-(async () => {
+(() => {
     const app = express();
 
-    const { typeDefs, resolvers } = await buildWikiTypeDefsAndResolvers();
-
-    const server = new ApolloServer({ typeDefs, resolvers });
+    const server = new ApolloServer({
+        schema: makeExecutableSchema({ resolvers, typeDefs: graphqlTypes }),
+    });
 
     server.applyMiddleware({ app });
 
