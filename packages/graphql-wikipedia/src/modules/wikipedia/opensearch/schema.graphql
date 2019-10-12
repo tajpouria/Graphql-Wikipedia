@@ -1,3 +1,4 @@
+scalar Any
 type Actions {
     """
     Search the wiki using the OpenSearch protocol.
@@ -7,10 +8,8 @@ type Actions {
         searchString: String!
         "customize openSearch action."
         openSearchOptions: OpenSearchOptions
-    ): [OpenSearchResults]!
+    ): [Any]!
 }
-
-scalar OpenSearchResults
 
 """
 customize openSearch action

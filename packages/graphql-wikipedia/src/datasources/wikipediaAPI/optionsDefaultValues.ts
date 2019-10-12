@@ -1,14 +1,11 @@
-import {
-    OpenSearchOptions,
-    Profile,
-} from "../../types/datasources/wikipediaAPI/actions/openSearch";
-import { ResponseDateFormat } from "../../types/datasources/wikipediaAPI/constants";
+import { OpenSearchOptions } from "../../types/datasources/wikipediaAPI/actions/openSearch";
+import { Profile, ResponseDataFormat } from "../../generated/graphql";
 
 export const openSearchOptionsDefaultValues: OpenSearchOptions = {
     namespace: 0,
     limit: 10,
-    profile: Profile.engineAutoselect,
+    profile: Profile.EngineAutoselect,
     suggest: true,
-    format: ResponseDateFormat.json,
+    format: ResponseDataFormat.Json,
     warningsaserror: false,
 };

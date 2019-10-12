@@ -39,9 +39,9 @@
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^1.8.1",
-        "@graphql-codegen/typescript": "1.8.1",
-        "@graphql-codegen/typescript-resolvers": "1.8.1",
         "@graphql-codegen/flow-resolvers": "1.8.1",
-        "@graphql-codegen/typescript-document-nodes": "1.8.1"
+        "@graphql-codegen/typescript": "1.8.1",
+        "@graphql-codegen/typescript-document-nodes": "1.8.1",
+        "@graphql-codegen/typescript-resolvers": "1.8.1"
     }
 }

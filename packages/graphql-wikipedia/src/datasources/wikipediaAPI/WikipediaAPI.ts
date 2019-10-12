@@ -1,12 +1,12 @@
 import {
     WikipediaApiLanguage,
     Actions,
-    ResponseDateFormat,
+    ResponseDataFormatWikiParam,
+    ProfileWikiParam,
 } from "../../types/datasources/wikipediaAPI/constants";
 import { WikiMediaURLResolver } from "../helpers/WikiMediaURLResolver";
 import {
     OpenSearchOptions,
-    Profile,
 } from "../../types/datasources/wikipediaAPI/actions/openSearch";
 import { openSearchOptionsDefaultValues } from "./optionsDefaultValues";
 
@@ -50,9 +50,9 @@ export class WikipediaAPI extends WikiRESTDataSource {
                 search: searchString,
                 namespace,
                 limit,
-                profile: Profile[profile],
+                profile: ProfileWikiParam[profile],
                 suggest,
-                format: ResponseDateFormat[format],
+                format: ResponseDataFormatWikiParam[format],
                 warningsaserror,
             });
 
