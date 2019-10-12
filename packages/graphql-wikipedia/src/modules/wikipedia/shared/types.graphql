@@ -1,0 +1,17 @@
+"""
+Represent fetched data language
+"""
+enum WikipediaAPILanguage {
+    en
+    nl
+}
+
+"""
+Represent fetched data format
+"""
+enum ResponseDataFormat {
+    json
+    jsonfm
+    xml
+    xmlfm
+}

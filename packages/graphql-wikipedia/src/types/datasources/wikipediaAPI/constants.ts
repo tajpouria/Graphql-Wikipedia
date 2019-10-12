@@ -1,8 +1,15 @@
 export enum WikipediaAPILanguage {
-    english = "en",
-    dutch = "nl",
+    en = "en",
+    nl = "nl",
 }
 
 export enum Actions {
     opensearch = "?action=opensearch&",
+}
+
+export enum ResponseDateFormat {
+    "json" = "json",
+    "jsonfm" = "jsonfm",
+    "xml" = "jsonfm",
+    "xmlfm" = "xmlfm",
 }

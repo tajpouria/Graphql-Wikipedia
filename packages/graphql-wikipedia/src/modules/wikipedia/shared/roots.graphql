@@ -1,0 +1,6 @@
+type Query {
+    wikipedia(
+        "Represent fetched data language.Default:en"
+        language: WikipediaAPILanguage
+    ): Actions!
+}

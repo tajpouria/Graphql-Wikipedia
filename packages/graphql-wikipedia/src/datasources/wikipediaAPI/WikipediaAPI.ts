@@ -10,7 +10,7 @@ import { WikiRESTDataSource } from "../helpers/WikiRESTDataSource";
 
 export class WikipediaAPI extends WikiRESTDataSource {
     constructor(
-        private language: WikipediaAPILanguage = WikipediaAPILanguage.english,
+        private language: WikipediaAPILanguage = WikipediaAPILanguage.en,
     ) {
         super();
     }
