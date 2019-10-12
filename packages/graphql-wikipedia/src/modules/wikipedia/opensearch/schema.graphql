@@ -7,8 +7,10 @@ type Actions {
         searchString: String!
         "customize openSearch action."
         openSearchOptions: OpenSearchOptions
-    ): [String]!
+    ): [OpenSearchResults]!
 }
+
+scalar OpenSearchResults
 
 """
 customize openSearch action
@@ -24,7 +26,7 @@ input OpenSearchOptions {
     profile: Profile = engineAutoselect
 
     "Do nothing if $wgEnableOpenSearchSuggest is false.Default:true"
-    suggest: Boolean
+    suggest: Boolean = true
 
     "The format of the output.Default:json"
     format: ResponseDataFormat

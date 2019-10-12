@@ -1,15 +1,15 @@
-import { WikipediaAPILanguage } from "../../types/datasources/wikipediaAPI/constants";
+import { WikipediaApiLanguage } from "../../types/datasources/wikipediaAPI/constants";
 import { WikiEndpoints } from "../../types/datasources/prefixes";
 
 export class WikiMediaURLResolver {
     public static wikipedia = (
-        language: WikipediaAPILanguage,
+        language: WikipediaApiLanguage,
     ): WikiEndpoints => {
         switch (language) {
-            case WikipediaAPILanguage.english:
+            case WikipediaApiLanguage.en:
             default:
                 return WikiEndpoints.EnglishWikipediaAPI;
-            case WikipediaAPILanguage.dutch:
+            case WikipediaApiLanguage.nl:
                 return WikiEndpoints.DutchWikipediaAPI;
         }
     };

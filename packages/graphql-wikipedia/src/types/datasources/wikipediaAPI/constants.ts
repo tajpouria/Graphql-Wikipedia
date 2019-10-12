@@ -1,4 +1,4 @@
-export enum WikipediaAPILanguage {
+export enum WikipediaApiLanguage {
     en = "en",
     nl = "nl",
 }

@@ -1,16 +1,20 @@
 import {
-    WikipediaAPILanguage,
+    WikipediaApiLanguage,
     Actions,
+    ResponseDateFormat,
 } from "../../types/datasources/wikipediaAPI/constants";
 import { WikiMediaURLResolver } from "../helpers/WikiMediaURLResolver";
-import { OpenSearchOptions } from "../../types/datasources/wikipediaAPI/actions/openSearch";
+import {
+    OpenSearchOptions,
+    Profile,
+} from "../../types/datasources/wikipediaAPI/actions/openSearch";
 import { openSearchOptionsDefaultValues } from "./optionsDefaultValues";
 
 import { WikiRESTDataSource } from "../helpers/WikiRESTDataSource";
 
 export class WikipediaAPI extends WikiRESTDataSource {
     constructor(
-        private language: WikipediaAPILanguage = WikipediaAPILanguage.en,
+        private language: WikipediaApiLanguage = WikipediaApiLanguage.en,
     ) {
         super();
     }
@@ -46,9 +50,9 @@ export class WikipediaAPI extends WikiRESTDataSource {
                 search: searchString,
                 namespace,
                 limit,
-                profile,
+                profile: Profile[profile],
                 suggest,
-                format,
+                format: ResponseDateFormat[format],
                 warningsaserror,
             });
 

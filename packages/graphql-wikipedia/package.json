@@ -26,7 +26,8 @@
     "scripts": {
         "start:tsc": "tsc -w",
         "copy-static-assets": "ts-node copyStaticAssets.js",
-        "test": "echo \"Error: run tests from root\" && exit 1"
+        "test": "echo \"Error: run tests from root\" && exit 1",
+        "gen": "graphql-codegen --config codegen.yml"
     },
     "dependencies": {
         "axios": "^0.19.0",
@@ -35,5 +36,12 @@
         "graphql-tools": "^4.0.0",
         "merge-graphql-schemas": "^1.7.0",
         "reflect-metadata": "^0.1.13"
+    },
+    "devDependencies": {
+        "@graphql-codegen/cli": "^1.8.1",
+        "@graphql-codegen/typescript": "1.8.1",
+        "@graphql-codegen/typescript-resolvers": "1.8.1",
+        "@graphql-codegen/flow-resolvers": "1.8.1",
+        "@graphql-codegen/typescript-document-nodes": "1.8.1"
     }
 }
