@@ -17,16 +17,16 @@ export type Scalars = {
 export type Actions = {
    __typename?: 'Actions',
   /** Search the wiki using the OpenSearch protocol. */
-  opensearch: Array<Maybe<OpenSearchResults>>,
+  openSearch?: Maybe<Array<Maybe<OpenSearchResults>>>,
 };
 
 
-export type ActionsOpensearchArgs = {
+export type ActionsOpenSearchArgs = {
   searchString: Scalars['String'],
-  openSearchOptions?: Maybe<OpenSearchOptions>
+  options?: Maybe<OpenSearchOptions>
 };
 
-/** customize openSearch action */
+/** Customize openSearch behaviours. */
 export type OpenSearchOptions = {
   /** Namespaces to search.Default:0.(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|...) */
   namespace?: Maybe<Scalars['Int']>,
@@ -34,25 +34,36 @@ export type OpenSearchOptions = {
   limit?: Maybe<Scalars['Int']>,
   /** Search profile to use.Default:engineAutoselect(strict|normal|fuzzy|fastFuzzy|classic|engineAutoselect) */
   profile?: Maybe<Profile>,
-  /** Do nothing if $wgEnableOpenSearchSuggest is false.Default:true */
+  /** 
+ * Enable OpenSearch suggestions requested by MediaWiki. Set this to false if
+   * you've disabled another suggestion script and want to reduce load caused by
+   * cached scripts pulling suggestions.Default:true
+ **/
   suggest?: Maybe<Scalars['Boolean']>,
-  /** The format of the output.Default:json */
-  format?: Maybe<ResponseDataFormat>,
-  /** If warnings are raised with format=json, return an API error instead of ignoring them.Default:false */
+  /** Return API warnings as error instead of ignoring them.Default:false */
   warningaserror?: Maybe<Scalars['Boolean']>,
 };
 
 export type OpenSearchResults = {
    __typename?: 'OpenSearchResults',
   /** Search result. */
-  result?: Maybe<Scalars['String']>,
-  /** A short description around search result */
-  resultDescriptions?: Maybe<Scalars['String']>,
-  /** Link a actual article */
-  resultLink?: Maybe<Scalars['String']>,
+  title?: Maybe<Scalars['String']>,
+  /** A short description around search result. */
+  description?: Maybe<Scalars['String']>,
+  /** Link a actual article. */
+  link?: Maybe<Scalars['String']>,
 };
 
-/** Search profile to use */
+/** 
+ * Search profile to use(
+ * strict: Strict profile with few punctuation characters removed but diacritics and stress marks are kept.|
+ * normal: Few punctuation characters, some diacritics and stopwords removed.|
+ * fuzzy: Similar to normal with typo correction (two typos supported).|
+ * fast-fuzzy: Experimental fuzzy profile (may be removed at any time).|
+ * classic: Classic prefix, few punctuation characters and some diacritics removed.|
+ * engine_autoselect: Let the search engine decide on the best profile to use.|
+ * )
+ **/
 export enum Profile {
   Strict = 'strict',
   Normal = 'normal',
@@ -71,14 +82,6 @@ export type Query = {
 export type QueryWikipediaArgs = {
   language?: Maybe<WikipediaApiLanguage>
 };
-
-/** Represent fetched data format */
-export enum ResponseDataFormat {
-  Json = 'json',
-  Jsonfm = 'jsonfm',
-  Xml = 'xml',
-  Xmlfm = 'xmlfm'
-}
 
 /** Represent fetched data language */
 export enum WikipediaApiLanguage {
@@ -165,7 +168,6 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>,
   Profile: Profile,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
-  ResponseDataFormat: ResponseDataFormat,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
 };
 
@@ -179,18 +181,17 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'],
   Profile: Profile,
   Boolean: Scalars['Boolean'],
-  ResponseDataFormat: ResponseDataFormat,
   OpenSearchResults: OpenSearchResults,
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Actions'] = ResolversParentTypes['Actions']> = {
-  opensearch?: Resolver<Array<Maybe<ResolversTypes['OpenSearchResults']>>, ParentType, ContextType, RequireFields<ActionsOpensearchArgs, 'searchString'>>,
+  openSearch?: Resolver<Maybe<Array<Maybe<ResolversTypes['OpenSearchResults']>>>, ParentType, ContextType, RequireFields<ActionsOpenSearchArgs, 'searchString'>>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['OpenSearchResults'] = ResolversParentTypes['OpenSearchResults']> = {
-  result?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  resultDescriptions?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
-  resultLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  link?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
@@ -277,7 +278,6 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<$ElementType<Scalars, 'Int'>>,
   Profile: Profile,
   Boolean: ResolverTypeWrapper<$ElementType<Scalars, 'Boolean'>>,
-  ResponseDataFormat: ResponseDataFormat,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
 };
 
@@ -291,18 +291,17 @@ export type ResolversParentTypes = {
   Int: $ElementType<Scalars, 'Int'>,
   Profile: Profile,
   Boolean: $ElementType<Scalars, 'Boolean'>,
-  ResponseDataFormat: ResponseDataFormat,
   OpenSearchResults: OpenSearchResults,
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Actions'>> = {
-  opensearch?: Resolver<Array<?$ElementType<ResolversTypes, 'OpenSearchResults'>>, ParentType, ContextType, $RequireFields<ActionsOpensearchArgs, { searchString: * }>>,
+  openSearch?: Resolver<?Array<?$ElementType<ResolversTypes, 'OpenSearchResults'>>, ParentType, ContextType, $RequireFields<ActionsOpenSearchArgs, { searchString: * }>>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'OpenSearchResults'>> = {
-  result?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
-  resultDescriptions?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
-  resultLink?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+  title?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+  description?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+  link?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Query'>> = {

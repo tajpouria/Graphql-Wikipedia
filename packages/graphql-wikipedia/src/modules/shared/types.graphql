@@ -7,11 +7,20 @@ enum WikipediaAPILanguage {
 }
 
 """
-Represent fetched data format
+Search profile to use(
+strict: Strict profile with few punctuation characters removed but diacritics and stress marks are kept.|
+normal: Few punctuation characters, some diacritics and stopwords removed.|
+fuzzy: Similar to normal with typo correction (two typos supported).|
+fast-fuzzy: Experimental fuzzy profile (may be removed at any time).|
+classic: Classic prefix, few punctuation characters and some diacritics removed.|
+engine_autoselect: Let the search engine decide on the best profile to use.|
+)
 """
-enum ResponseDataFormat {
-    json
-    jsonfm
-    xml
-    xmlfm
+enum Profile {
+    strict
+    normal
+    fuzzy
+    fastFuzzy
+    classic
+    engineAutoselect
 }

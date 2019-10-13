@@ -1,0 +1,40 @@
+type Actions {
+    """
+    Search the wiki using the OpenSearch protocol.
+    """
+    openSearch(
+        "Search string.This parameter is required."
+        searchString: String!
+        "Customize openSearch behaviours."
+        options: OpenSearchOptions
+    ): [OpenSearchResults]
+}
+
+type OpenSearchResults {
+    "Search result."
+    title: String
+    "A short description around search result."
+    description: String
+    "Link a actual article."
+    link: String
+}
+
+"""
+Customize openSearch behaviours.
+"""
+input OpenSearchOptions {
+    "Namespaces to search.Default:0.(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|...)"
+    namespace: Int = 0
+
+    "Maximum number of results to return.Default:10"
+    limit: Int = 10
+
+    "Search profile to use.Default:engineAutoselect(strict|normal|fuzzy|fastFuzzy|classic|engineAutoselect)"
+    profile: Profile = engineAutoselect
+
+    "Enable OpenSearch suggestions requested by MediaWiki. Set this to false if you've disabled another suggestion script and want to reduce load caused by cached scripts pulling suggestions.Default:true"
+    suggest: Boolean = true
+
+    "Return API warnings as error instead of ignoring them.Default:false"
+    warningaserror: Boolean = false
+}

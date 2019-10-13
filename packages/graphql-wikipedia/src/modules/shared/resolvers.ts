@@ -6,7 +6,7 @@ import {
 import { ActionsResolverMap } from "../../types/modules/wikipedia";
 import { WikipediaAPI } from "../../datasources/wikipediaAPI/WikipediaAPI";
 import { WikipediaApiLanguage } from "../../types/datasources/wikipediaAPI/constants";
-import { WikimediaActionsResponseParser } from "../../datasources/helpers/WikmediaActinosRespnseParser";
+import { WikimediaActionsResponseParser } from "../../datasources/helpers/WikmediaActinosResponseParser";
 
 interface RootResolverMap {
     Query: QueryResolvers;

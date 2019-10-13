@@ -7,10 +7,10 @@ import {
 
 export const resolvers: ActionsResolverMap = {
     Actions: {
-        opensearch: async (_root, { searchString, openSearchOptions }, ctx) =>
+        openSearch: (_root, { searchString, options }, ctx) =>
             Responder.send<OpenSearchResponse, OpenSearchParsedResponse>(
                 ctx.wikipediaAPI.openSearch,
-                [searchString, openSearchOptions],
+                [searchString, options],
                 ctx.responseParser.openSearch,
             ),
     },

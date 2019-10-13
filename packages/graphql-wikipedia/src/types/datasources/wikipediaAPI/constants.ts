@@ -7,13 +7,6 @@ export enum Actions {
     opensearch = "?action=opensearch&",
 }
 
-export enum ResponseDataFormatWikiParam {
-    "json" = "json",
-    "jsonfm" = "jsonfm",
-    "xml" = "jsonfm",
-    "xmlfm" = "xmlfm",
-}
-
 export enum ProfileWikiParam {
     "strict" = "strict", // Strict profile with few punctuation characters removed but diacritics and stress marks are kept,
     "normal" = "normal", // Few punctuation characters, some diacritics and stopwords removed.

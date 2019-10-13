@@ -1,4 +1,4 @@
-import { Profile, ResponseDataFormat } from "../../../../generated/graphql";
+import { Profile } from "../../../../generated/graphql";
 import { Namespace } from "../constants";
 
 export interface OpenSearchOptions {
@@ -6,14 +6,14 @@ export interface OpenSearchOptions {
     limit: number;
     profile: Profile;
     suggest: boolean;
-    format: ResponseDataFormat;
+    format: "json";
     warningsaserror: boolean;
 }
 
 export type OpenSearchResponse = [string, [string], [string], [string]];
 
 export type OpenSearchParsedResponse = Array<{
-    result: string;
-    resultDescriptions: string;
-    resultLink: string;
+    title: string;
+    description: string;
+    link: string;
 }>;
