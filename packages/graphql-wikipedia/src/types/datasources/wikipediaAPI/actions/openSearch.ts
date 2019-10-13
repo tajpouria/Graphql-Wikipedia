@@ -9,3 +9,11 @@ export interface OpenSearchOptions {
     format: ResponseDataFormat;
     warningsaserror: boolean;
 }
+
+export type OpenSearchResponse = [string, [string], [string], [string]];
+
+export type OpenSearchParsedResponse = Array<{
+    result: string;
+    resultDescriptions: string;
+    resultLink: string;
+}>;

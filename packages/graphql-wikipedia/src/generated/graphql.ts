@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { GraphQLResolveInfo } from 'graphql';
 import { APIEmbeddedContext } from '../types/modules/context';
 import { type GraphQLResolveInfo } from 'graphql';
 import { type APIEmbeddedContext } from '../types/modules/context';
@@ -12,13 +12,12 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  Any: any,
 };
 
 export type Actions = {
    __typename?: 'Actions',
   /** Search the wiki using the OpenSearch protocol. */
-  opensearch: Array<Maybe<Scalars['Any']>>,
+  opensearch: Array<Maybe<OpenSearchResults>>,
 };
 
 
@@ -26,7 +25,6 @@ export type ActionsOpensearchArgs = {
   searchString: Scalars['String'],
   openSearchOptions?: Maybe<OpenSearchOptions>
 };
-
 
 /** customize openSearch action */
 export type OpenSearchOptions = {
@@ -42,6 +40,16 @@ export type OpenSearchOptions = {
   format?: Maybe<ResponseDataFormat>,
   /** If warnings are raised with format=json, return an API error instead of ignoring them.Default:false */
   warningaserror?: Maybe<Scalars['Boolean']>,
+};
+
+export type OpenSearchResults = {
+   __typename?: 'OpenSearchResults',
+  /** Search result. */
+  result?: Maybe<Scalars['String']>,
+  /** A short description around search result */
+  resultDescriptions?: Maybe<Scalars['String']>,
+  /** Link a actual article */
+  resultLink?: Maybe<Scalars['String']>,
 };
 
 /** Search profile to use */
@@ -158,7 +166,7 @@ export type ResolversTypes = {
   Profile: Profile,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   ResponseDataFormat: ResponseDataFormat,
-  Any: ResolverTypeWrapper<Scalars['Any']>,
+  OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -172,16 +180,18 @@ export type ResolversParentTypes = {
   Profile: Profile,
   Boolean: Scalars['Boolean'],
   ResponseDataFormat: ResponseDataFormat,
-  Any: Scalars['Any'],
+  OpenSearchResults: OpenSearchResults,
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Actions'] = ResolversParentTypes['Actions']> = {
-  opensearch?: Resolver<Array<Maybe<ResolversTypes['Any']>>, ParentType, ContextType, RequireFields<ActionsOpensearchArgs, 'searchString'>>,
+  opensearch?: Resolver<Array<Maybe<ResolversTypes['OpenSearchResults']>>, ParentType, ContextType, RequireFields<ActionsOpensearchArgs, 'searchString'>>,
 };
 
-export interface AnyScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Any'], any> {
-  name: 'Any'
-}
+export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['OpenSearchResults'] = ResolversParentTypes['OpenSearchResults']> = {
+  result?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  resultDescriptions?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  resultLink?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+};
 
 export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   wikipedia?: Resolver<ResolversTypes['Actions'], ParentType, ContextType, QueryWikipediaArgs>,
@@ -189,7 +199,7 @@ export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType extends 
 
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
-  Any?: GraphQLScalarType,
+  OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
 };
 
@@ -268,7 +278,7 @@ export type ResolversTypes = {
   Profile: Profile,
   Boolean: ResolverTypeWrapper<$ElementType<Scalars, 'Boolean'>>,
   ResponseDataFormat: ResponseDataFormat,
-  Any: ResolverTypeWrapper<$ElementType<Scalars, 'Any'>>,
+  OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -282,16 +292,17 @@ export type ResolversParentTypes = {
   Profile: Profile,
   Boolean: $ElementType<Scalars, 'Boolean'>,
   ResponseDataFormat: ResponseDataFormat,
-  Any: $ElementType<Scalars, 'Any'>,
+  OpenSearchResults: OpenSearchResults,
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Actions'>> = {
-  opensearch?: Resolver<Array<?$ElementType<ResolversTypes, 'Any'>>, ParentType, ContextType, $RequireFields<ActionsOpensearchArgs, { searchString: * }>>,
+  opensearch?: Resolver<Array<?$ElementType<ResolversTypes, 'OpenSearchResults'>>, ParentType, ContextType, $RequireFields<ActionsOpensearchArgs, { searchString: * }>>,
 };
 
-export type AnyScalarConfig = {
-  ...GraphQLScalarTypeConfig<$ElementType<ResolversTypes, 'Any'>, any>, 
-  name: 'Any'
+export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'OpenSearchResults'>> = {
+  result?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+  resultDescriptions?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+  resultLink?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
 };
 
 export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Query'>> = {
@@ -300,7 +311,7 @@ export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType = $Eleme
 
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
-  Any?: GraphQLScalarType<>,
+  OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
 };
 
