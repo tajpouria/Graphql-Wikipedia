@@ -7,8 +7,10 @@
     "license": "MIT",
     "private": true,
     "scripts": {
-        "start": "concurrently \"lerna run start:server --stream\" \"lerna run start:tsc\" \"lerna run copy-static-assets --stream\"",
-        "bootstrap": "lerna bootstrap"
+        "bootstrap": "lerna bootstrap",
+        "start": "concurrently \"lerna run start:server --stream\" \"lerna run start:tsc\" \"lerna run copy-static-assets --stream\" \"yarn run build:actions-docs\"",
+        "build:actions-docs": "typedoc --theme minimal --module commonjs --excludePrivate --excludeProtected --out docs packages/graphql-wikipedia/src/datasources/helpers/WikimediaActions.ts"
+
     },
     "devDependencies": {
         "@types/node": "^12.7.11",
@@ -20,6 +22,7 @@
         "eslint-plugin-import": "^2.18.2",
         "lerna": "^3.16.5",
         "ts-node": "^8.4.1",
+        "typedoc": "^0.15.0",
         "typescript": "^3.6.3"
     },
     "dependencies": {

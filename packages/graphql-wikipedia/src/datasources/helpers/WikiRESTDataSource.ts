@@ -6,7 +6,7 @@ interface RESTRequestParams {
 }
 
 export abstract class WikiRESTDataSource {
-    abstract baseUrl: string;
+    protected abstract baseUrl: string;
 
     protected httpGET = async <ResponseType = any>(
         action: Actions,
