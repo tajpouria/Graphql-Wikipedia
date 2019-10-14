@@ -1,10 +1,11 @@
 import { WikiRESTDataSource } from "./WikiRESTDataSource";
+import { Actions } from "../../types/datasources/wikipediaAPI/constants";
 import {
-    ProfileWikiParam,
-    Actions,
-} from "../../types/datasources/wikipediaAPI/constants";
-import { OpenSearchOptions } from "../../types/datasources/wikipediaAPI/actions/openSearch";
+    OpenSearchOptions,
+    OpenSearchResponse,
+} from "../../types/datasources/wikipediaAPI/actions/openSearch";
 import { openSearchOptionsDefaultValues } from "./actinosOptionsDefaultValues";
+import { WikimediaActionsResponseParser } from "./WikmediaActinosResponseParser";
 
 export abstract class WikimediaActions extends WikiRESTDataSource {
     abstract baseUrl: string;
@@ -19,27 +20,21 @@ export abstract class WikimediaActions extends WikiRESTDataSource {
      * @param {string} options.profile  Search profile to use.Default:'engine_autoselect'
      * @param {boolean} options.suggest Enable OpenSearch suggestions requested by MediaWiki. Set this to false if you've disabled another suggestion script and want to reduce load caused by cached scripts pulling suggestions.Default:true
      * @param {boolean} options.warningaserror return an API error instead of ignoring them.Default:false,
-     * @return {string[]}
+     * @return {{title: string, description: string, link: string}[]}
      */
     public openSearch = async (
         searchString: string,
-        {
-            namespace,
-            limit,
-            profile,
-            suggest,
-            warningsaserror,
-        }: OpenSearchOptions = openSearchOptionsDefaultValues,
+        options: OpenSearchOptions = openSearchOptionsDefaultValues,
     ) => {
-        const response = await this.httpGET(Actions.opensearch, {
-            search: searchString,
-            namespace,
-            limit,
-            profile: ProfileWikiParam[profile],
-            suggest,
-            warningsaserror,
-        });
+        const response = await this.httpGET<OpenSearchResponse>(
+            Actions.opensearch,
+            {
+                ...openSearchOptionsDefaultValues,
+                ...options,
+                search: searchString,
+            },
+        );
 
-        return response.data;
+        return WikimediaActionsResponseParser.openSearch(response.data);
     };
 }

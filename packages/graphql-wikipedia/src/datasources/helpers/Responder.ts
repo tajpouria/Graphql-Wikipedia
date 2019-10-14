@@ -1,19 +1,13 @@
 export class Responder {
-    public static send = async <ResponseType = any, ParsedResponseType = any>(
-        requestFunction: (args?: any) => Promise<ResponseType>,
+    public static send = async <ParsedResponseType = any>(
+        requestFunction: (args?: any) => Promise<ParsedResponseType>,
         requestArgs: any[] = [],
-        dataParser: (data: ResponseType) => ParsedResponseType,
     ) => {
         try {
             const response = await requestFunction(...requestArgs);
 
-            if (response.error) {
-                throw new Error(response.error);
-            }
-
-            return dataParser(response);
+            return response;
         } catch (error) {
-            console.error(error);
             throw new Error(error);
         }
     };

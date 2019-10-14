@@ -4,7 +4,7 @@ import {
 } from "../../types/datasources/wikipediaAPI/actions/openSearch";
 
 export class WikimediaActionsResponseParser {
-    public openSearch = (
+    public static openSearch = (
         data: OpenSearchResponse,
     ): OpenSearchParsedResponse => {
         const results = [];

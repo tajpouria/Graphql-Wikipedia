@@ -1,13 +1,12 @@
-import { Profile } from "../../../../generated/graphql";
-import { Namespace } from "../constants";
+import { Namespace, Profile } from "../constants";
 
 export interface OpenSearchOptions {
-    namespace: Namespace;
-    limit: number;
-    profile: Profile;
-    suggest: boolean;
-    format: "json";
-    warningsaserror: boolean;
+    namespace?: Namespace;
+    limit?: number;
+    profile?: Profile;
+    suggest?: boolean;
+    readonly format?: "json";
+    warningsaserror?: boolean;
 }
 
 export type OpenSearchResponse = [string, [string], [string], [string]];

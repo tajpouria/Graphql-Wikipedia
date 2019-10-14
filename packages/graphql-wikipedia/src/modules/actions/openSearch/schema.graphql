@@ -36,5 +36,5 @@ input OpenSearchOptions {
     suggest: Boolean = true
 
     "Return API warnings as error instead of ignoring them.Default:false"
-    warningaserror: Boolean = false
+    warningsaserror: Boolean = false
 }

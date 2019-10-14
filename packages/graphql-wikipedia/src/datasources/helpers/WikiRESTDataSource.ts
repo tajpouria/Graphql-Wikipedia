@@ -2,20 +2,20 @@ import axios from "axios";
 import { Actions } from "../../types/datasources/wikipediaAPI/constants";
 
 interface RESTRequestParams {
-    [parameter: string]: string | number | boolean;
+    [parameter: string]: string | number | boolean | undefined;
 }
 
 export abstract class WikiRESTDataSource {
     abstract baseUrl: string;
 
-    protected httpGET = async (
+    protected httpGET = async <ResponseType = any>(
         action: Actions,
         params: RESTRequestParams = {},
         preParams: string[] = [],
     ) => {
         Object.keys(params).map(key => preParams.push(`${key}=${params[key]}`));
         try {
-            const response = await axios.get(
+            const response = await axios.get<ResponseType>(
                 this.baseUrl + action + preParams.join("&"),
             );
             return response;

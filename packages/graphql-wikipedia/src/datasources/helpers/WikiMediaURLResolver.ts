@@ -6,10 +6,10 @@ export class WikiMediaURLResolver {
         language: WikipediaApiLanguage,
     ): WikiEndpoints => {
         switch (language) {
-            case WikipediaApiLanguage.en:
+            case "en":
             default:
                 return WikiEndpoints.EnglishWikipediaAPI;
-            case WikipediaApiLanguage.nl:
+            case "nl":
                 return WikiEndpoints.DutchWikipediaAPI;
         }
     };
