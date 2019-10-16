@@ -70,7 +70,7 @@ export abstract class WikimediaActions extends WikiRESTDataSource {
      * @typedef {Object} [options] - Customize randomAction behaviors.
      * @param {Number} [options.namespace] - Return pages in these namespaces only.Default:"*"
      * @param {Number} [options.limit] - Maximum number of results to return.Default:10
-     * @param {String} [options.profile] - How to filter for redirects:"nonredirects"
+     * @param {String} [options.filterRedirect] - How to filter for redirects:Default: "nonredirects"
      * @returns {{id:Number, ns:Number, title:String}[]}
      */
     public random = async ({

@@ -18,6 +18,8 @@ export type Actions = {
    __typename?: 'Actions',
   /** Search the wiki using the OpenSearch protocol. */
   openSearch?: Maybe<Array<Maybe<OpenSearchResults>>>,
+  /** Get a set of random pages. */
+  random?: Maybe<Array<Maybe<RandomActionResults>>>,
 };
 
 
@@ -26,9 +28,20 @@ export type ActionsOpenSearchArgs = {
   options?: Maybe<OpenSearchOptions>
 };
 
+
+export type ActionsRandomArgs = {
+  options?: Maybe<RandomActionOptions>
+};
+
+export enum FilterRedirect {
+  All = 'all',
+  Redirects = 'redirects',
+  Nonredirects = 'nonredirects'
+}
+
 /** Customize openSearch behaviours. */
 export type OpenSearchOptions = {
-  /** Namespaces to search.Default:0.(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|...) */
+  /** Namespaces to search.Default:0.(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|710|711|828|829|2300|2301|2302|2303) */
   namespace?: Maybe<Scalars['Int']>,
   /** Maximum number of results to return.Default:10 */
   limit?: Maybe<Scalars['Int']>,
@@ -41,7 +54,7 @@ export type OpenSearchOptions = {
  **/
   suggest?: Maybe<Scalars['Boolean']>,
   /** Return API warnings as error instead of ignoring them.Default:false */
-  warningaserror?: Maybe<Scalars['Boolean']>,
+  warningsaserror?: Maybe<Scalars['Boolean']>,
 };
 
 export type OpenSearchResults = {
@@ -59,7 +72,6 @@ export type OpenSearchResults = {
  * strict: Strict profile with few punctuation characters removed but diacritics and stress marks are kept.|
  * normal: Few punctuation characters, some diacritics and stopwords removed.|
  * fuzzy: Similar to normal with typo correction (two typos supported).|
- * fast-fuzzy: Experimental fuzzy profile (may be removed at any time).|
  * classic: Classic prefix, few punctuation characters and some diacritics removed.|
  * engine_autoselect: Let the search engine decide on the best profile to use.|
  * )
@@ -68,9 +80,8 @@ export enum Profile {
   Strict = 'strict',
   Normal = 'normal',
   Fuzzy = 'fuzzy',
-  FastFuzzy = 'fastFuzzy',
   Classic = 'classic',
-  EngineAutoselect = 'engineAutoselect'
+  EngineAutoselect = 'engine_autoselect'
 }
 
 export type Query = {
@@ -81,6 +92,23 @@ export type Query = {
 
 export type QueryWikipediaArgs = {
   language?: Maybe<WikipediaApiLanguage>
+};
+
+/** Customize randomAction behaviours. */
+export type RandomActionOptions = {
+  /** Return pages in these namespaces only.Default:*(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|710|711|828|829|2300|2301|2302|2303|'*') */
+  namespace?: Maybe<Scalars['Int']>,
+  /** Maximum number of results to return.No more than 500 allowed.Default:10 */
+  limit?: Maybe<Scalars['Int']>,
+  /** How to filter for redirects.Default: nonredirects */
+  filterRedirect?: Maybe<FilterRedirect>,
+};
+
+export type RandomActionResults = {
+   __typename?: 'RandomActionResults',
+  id: Scalars['Int'],
+  ns: Scalars['Int'],
+  title: Scalars['String'],
 };
 
 /** Represent fetched data language */
@@ -169,6 +197,9 @@ export type ResolversTypes = {
   Profile: Profile,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
+  RandomActionOptions: RandomActionOptions,
+  FilterRedirect: FilterRedirect,
+  RandomActionResults: ResolverTypeWrapper<RandomActionResults>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -182,10 +213,14 @@ export type ResolversParentTypes = {
   Profile: Profile,
   Boolean: Scalars['Boolean'],
   OpenSearchResults: OpenSearchResults,
+  RandomActionOptions: RandomActionOptions,
+  FilterRedirect: FilterRedirect,
+  RandomActionResults: RandomActionResults,
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Actions'] = ResolversParentTypes['Actions']> = {
   openSearch?: Resolver<Maybe<Array<Maybe<ResolversTypes['OpenSearchResults']>>>, ParentType, ContextType, RequireFields<ActionsOpenSearchArgs, 'searchString'>>,
+  random?: Resolver<Maybe<Array<Maybe<ResolversTypes['RandomActionResults']>>>, ParentType, ContextType, ActionsRandomArgs>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['OpenSearchResults'] = ResolversParentTypes['OpenSearchResults']> = {
@@ -198,10 +233,17 @@ export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType extends 
   wikipedia?: Resolver<ResolversTypes['Actions'], ParentType, ContextType, QueryWikipediaArgs>,
 };
 
+export type RandomActionResultsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['RandomActionResults'] = ResolversParentTypes['RandomActionResults']> = {
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  ns?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+};
+
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
   OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  RandomActionResults?: RandomActionResultsResolvers<ContextType>,
 };
 
 
@@ -279,6 +321,9 @@ export type ResolversTypes = {
   Profile: Profile,
   Boolean: ResolverTypeWrapper<$ElementType<Scalars, 'Boolean'>>,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
+  RandomActionOptions: RandomActionOptions,
+  FilterRedirect: FilterRedirect,
+  RandomActionResults: ResolverTypeWrapper<RandomActionResults>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -292,10 +337,14 @@ export type ResolversParentTypes = {
   Profile: Profile,
   Boolean: $ElementType<Scalars, 'Boolean'>,
   OpenSearchResults: OpenSearchResults,
+  RandomActionOptions: RandomActionOptions,
+  FilterRedirect: FilterRedirect,
+  RandomActionResults: RandomActionResults,
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Actions'>> = {
   openSearch?: Resolver<?Array<?$ElementType<ResolversTypes, 'OpenSearchResults'>>, ParentType, ContextType, $RequireFields<ActionsOpenSearchArgs, { searchString: * }>>,
+  random?: Resolver<?Array<?$ElementType<ResolversTypes, 'RandomActionResults'>>, ParentType, ContextType, ActionsRandomArgs>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'OpenSearchResults'>> = {
@@ -308,10 +357,17 @@ export type QueryResolvers<ContextType = APIEmbeddedContext, ParentType = $Eleme
   wikipedia?: Resolver<$ElementType<ResolversTypes, 'Actions'>, ParentType, ContextType, QueryWikipediaArgs>,
 };
 
+export type RandomActionResultsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'RandomActionResults'>> = {
+  id?: Resolver<$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
+  ns?: Resolver<$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
+  title?: Resolver<$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+};
+
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
   OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
+  RandomActionResults?: RandomActionResultsResolvers<ContextType>,
 };
 
 

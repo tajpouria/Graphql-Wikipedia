@@ -1,0 +1,30 @@
+type Actions {
+    """
+    Get a set of random pages.
+    """
+    random(options: RandomActionOptions): [RandomActionResults]
+}
+
+type RandomActionResults {
+    id: Int!
+    ns: Int!
+    title: String!
+}
+
+"""
+Customize randomAction behaviours.
+"""
+input RandomActionOptions {
+    "Return pages in these namespaces only.Default:*(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|710|711|828|829|2300|2301|2302|2303|'*')"
+    namespace: Int = "*"
+    "Maximum number of results to return.No more than 500 allowed.Default:10"
+    limit: Int = 10
+    "How to filter for redirects.Default: nonredirects"
+    filterRedirect: FilterRedirect = nonredirects
+}
+
+enum FilterRedirect {
+    all
+    redirects
+    nonredirects
+}
