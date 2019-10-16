@@ -39,6 +39,7 @@ module.exports = {
         "global-require": "off",
         "import/no-dynamic-require": "off",
         "import/no-extraneous-dependencies": "off",
+        "operator-linebreak": "off",
     },
     settings: {
         "import/resolver": {

@@ -2,6 +2,10 @@ import {
     OpenSearchResponse,
     OpenSearchParsedResponse,
 } from "../../types/datasources/wikipediaAPI/actions/openSearch";
+import {
+    RandomResponse,
+    RandomParsedResponse,
+} from "../../types/datasources/wikipediaAPI/actions/Random";
 
 export class WikimediaActionsResponseParser {
     public static openSearch = (
@@ -17,4 +21,7 @@ export class WikimediaActionsResponseParser {
         }
         return results;
     };
+
+    public static random = (data: RandomResponse): RandomParsedResponse =>
+        data.query.random;
 }

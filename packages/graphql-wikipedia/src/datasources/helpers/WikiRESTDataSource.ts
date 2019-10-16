@@ -1,5 +1,8 @@
 import axios from "axios";
-import { Actions } from "../../types/datasources/wikipediaAPI/constants";
+import {
+    Actions,
+    ResponseFormat,
+} from "../../types/datasources/wikipediaAPI/constants";
 
 interface RESTRequestParams {
     [parameter: string]: string | number | boolean | undefined;
@@ -16,7 +19,9 @@ export abstract class WikiRESTDataSource {
         Object.keys(params).map(key => preParams.push(`${key}=${params[key]}`));
         try {
             const response = await axios.get<ResponseType>(
-                this.baseUrl + action + preParams.join("&"),
+                `${this.baseUrl}${action}${preParams.join("&")}&format=${
+                    ResponseFormat.json
+                }`,
             );
             return response;
         } catch (err) {

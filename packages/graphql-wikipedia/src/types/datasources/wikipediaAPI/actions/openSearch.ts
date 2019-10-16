@@ -5,14 +5,15 @@ export interface OpenSearchOptions {
     limit?: number;
     profile?: Profile;
     suggest?: boolean;
-    readonly format?: "json";
     warningsaserror?: boolean;
 }
 
 export type OpenSearchResponse = [string, [string], [string], [string]];
 
-export type OpenSearchParsedResponse = Array<{
-    title: string;
-    description: string;
-    link: string;
-}>;
+export type OpenSearchParsedResponse =
+    | Array<{
+          title: string;
+          description: string;
+          link: string;
+      }>
+    | [];

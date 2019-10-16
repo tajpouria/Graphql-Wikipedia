@@ -3,13 +3,18 @@ import { WikipediaAPI } from "@tajpouria/graphql-wikipedia";
 
 const app = express();
 
-const wikipediaAPI = new WikipediaAPI("nl");
+const wikipediaAPI = new WikipediaAPI();
 
 app.get("/openSearch", async (_req, res: Response) => {
     const data = await wikipediaAPI.openSearch("graphql", {
-        limit: 100,
+        limit: 10,
         profile: "fast-fuzzy",
     });
+    res.json(data);
+});
+
+app.get("/random", async (_req, res: Response) => {
+    const data = await wikipediaAPI.random();
     res.json(data);
 });
 

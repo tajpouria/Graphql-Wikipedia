@@ -1,7 +1,15 @@
 export type WikipediaApiLanguage = "en" | "nl";
 
 export enum Actions {
-    opensearch = "?action=opensearch&",
+    openSearch = "?action=opensearch&",
+    query = "?action=query&",
+}
+
+export enum ResponseFormat {
+    "json" = "json",
+    "jsonfm" = "jsonfm",
+    "xml" = "xml",
+    "xmlfm" = "xmlfm",
 }
 
 export type Profile =
@@ -13,6 +21,7 @@ export type Profile =
     | "engine_autoselect"; // Let the search engine decide on the best profile to use.
 
 export type Namespace =
+    | "*"
     | 0
     | 1
     | 2
