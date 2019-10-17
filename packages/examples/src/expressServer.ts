@@ -5,8 +5,16 @@ const app = express();
 
 const wikipediaAPI = new WikipediaAPI();
 
+app.get("/categories", async (_req, res: Response) => {
+    const data = await wikipediaAPI.categories("Albert Einstein", {
+        limit: 12,
+        order: "descending",
+    });
+    res.json(data);
+});
+
 app.get("/openSearch", async (_req, res: Response) => {
-    const data = await wikipediaAPI.openSearch("graphql", {
+    const data = await wikipediaAPI.openSearch("Albert Einstein", {
         limit: 10,
         profile: "fast-fuzzy",
     });

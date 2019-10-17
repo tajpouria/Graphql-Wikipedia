@@ -20,6 +20,8 @@ export type Profile =
     | "classic" // Classic prefix, few punctuation characters and some diacritics removed.
     | "engine_autoselect"; // Let the search engine decide on the best profile to use.
 
+export type Order = "ascending" | "descending";
+
 export type Namespace =
     | "*"
     | 0

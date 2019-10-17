@@ -6,8 +6,23 @@ import {
     RandomResponse,
     RandomParsedResponse,
 } from "../../types/datasources/wikipediaAPI/actions/Random";
+import {
+    CategoriesResponse,
+    ParsedCategoriesResponse,
+} from "../../types/datasources/wikipediaAPI/actions/categories";
 
 export class WikimediaActionsResponseParser {
+    public static categories = ({
+        query: { pages },
+    }: CategoriesResponse): ParsedCategoriesResponse => {
+        const results: ParsedCategoriesResponse = {};
+        Object.keys(pages).forEach(key => {
+            results[key] = pages[key].categories;
+        });
+
+        return results;
+    };
+
     public static openSearch = (
         data: OpenSearchResponse,
     ): OpenSearchParsedResponse => {
@@ -19,6 +34,7 @@ export class WikimediaActionsResponseParser {
                 link: data[3][i],
             });
         }
+
         return results;
     };
 

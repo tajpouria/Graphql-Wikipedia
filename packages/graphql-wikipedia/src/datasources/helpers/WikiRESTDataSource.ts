@@ -16,7 +16,9 @@ export abstract class WikiRESTDataSource {
         params: RESTRequestParams = {},
         preParams: string[] = [],
     ) => {
-        Object.keys(params).map(key => preParams.push(`${key}=${params[key]}`));
+        Object.keys(params).map(
+            key => params[key] && preParams.push(`${key}=${params[key]}`),
+        );
         try {
             const response = await axios.get<ResponseType>(
                 `${this.baseUrl}${action}${preParams.join("&")}&format=${
