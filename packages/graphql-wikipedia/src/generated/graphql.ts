@@ -16,10 +16,17 @@ export type Scalars = {
 
 export type Actions = {
    __typename?: 'Actions',
+  categories?: Maybe<Array<Maybe<Category>>>,
   /** Search the wiki using the OpenSearch protocol. */
   openSearch?: Maybe<Array<Maybe<OpenSearchResults>>>,
   /** Get a set of random pages. */
   random?: Maybe<Array<Maybe<RandomActionResults>>>,
+};
+
+
+export type ActionsCategoriesArgs = {
+  title: Scalars['String'],
+  options?: Maybe<CategoriesOptions>
 };
 
 
@@ -31,6 +38,22 @@ export type ActionsOpenSearchArgs = {
 
 export type ActionsRandomArgs = {
   options?: Maybe<RandomActionOptions>
+};
+
+export type CategoriesOptions = {
+  /** Maximum number of results to return.Default:10 */
+  limit?: Maybe<Scalars['Int']>,
+  /** Adds timestamp of when the category was added.Default:false */
+  timeStamp?: Maybe<Scalars['Boolean']>,
+  /** The direction in which to list.Default:'ascending' */
+  order?: Maybe<Order>,
+};
+
+export type Category = {
+   __typename?: 'Category',
+  ns: Scalars['Int'],
+  title: Scalars['String'],
+  timestamp?: Maybe<Scalars['String']>,
 };
 
 export enum FilterRedirect {
@@ -66,6 +89,12 @@ export type OpenSearchResults = {
   /** Link a actual article. */
   link?: Maybe<Scalars['String']>,
 };
+
+/** The direction in which to list. */
+export enum Order {
+  Ascending = 'ascending',
+  Descending = 'descending'
+}
 
 /** 
  * Search profile to use(
@@ -192,10 +221,13 @@ export type ResolversTypes = {
   WikipediaAPILanguage: WikipediaApiLanguage,
   Actions: ResolverTypeWrapper<Actions>,
   String: ResolverTypeWrapper<Scalars['String']>,
-  OpenSearchOptions: OpenSearchOptions,
+  categoriesOptions: CategoriesOptions,
   Int: ResolverTypeWrapper<Scalars['Int']>,
-  Profile: Profile,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+  Order: Order,
+  Category: ResolverTypeWrapper<Category>,
+  OpenSearchOptions: OpenSearchOptions,
+  Profile: Profile,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
   RandomActionOptions: RandomActionOptions,
   FilterRedirect: FilterRedirect,
@@ -208,10 +240,13 @@ export type ResolversParentTypes = {
   WikipediaAPILanguage: WikipediaApiLanguage,
   Actions: Actions,
   String: Scalars['String'],
-  OpenSearchOptions: OpenSearchOptions,
+  categoriesOptions: CategoriesOptions,
   Int: Scalars['Int'],
-  Profile: Profile,
   Boolean: Scalars['Boolean'],
+  Order: Order,
+  Category: Category,
+  OpenSearchOptions: OpenSearchOptions,
+  Profile: Profile,
   OpenSearchResults: OpenSearchResults,
   RandomActionOptions: RandomActionOptions,
   FilterRedirect: FilterRedirect,
@@ -219,8 +254,15 @@ export type ResolversParentTypes = {
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Actions'] = ResolversParentTypes['Actions']> = {
+  categories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType, RequireFields<ActionsCategoriesArgs, 'title'>>,
   openSearch?: Resolver<Maybe<Array<Maybe<ResolversTypes['OpenSearchResults']>>>, ParentType, ContextType, RequireFields<ActionsOpenSearchArgs, 'searchString'>>,
   random?: Resolver<Maybe<Array<Maybe<ResolversTypes['RandomActionResults']>>>, ParentType, ContextType, ActionsRandomArgs>,
+};
+
+export type CategoryResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
+  ns?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  timestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['OpenSearchResults'] = ResolversParentTypes['OpenSearchResults']> = {
@@ -241,6 +283,7 @@ export type RandomActionResultsResolvers<ContextType = APIEmbeddedContext, Paren
 
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
+  Category?: CategoryResolvers<ContextType>,
   OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   RandomActionResults?: RandomActionResultsResolvers<ContextType>,
@@ -316,10 +359,13 @@ export type ResolversTypes = {
   WikipediaAPILanguage: WikipediaApiLanguage,
   Actions: ResolverTypeWrapper<Actions>,
   String: ResolverTypeWrapper<$ElementType<Scalars, 'String'>>,
-  OpenSearchOptions: OpenSearchOptions,
+  categoriesOptions: CategoriesOptions,
   Int: ResolverTypeWrapper<$ElementType<Scalars, 'Int'>>,
-  Profile: Profile,
   Boolean: ResolverTypeWrapper<$ElementType<Scalars, 'Boolean'>>,
+  Order: Order,
+  Category: ResolverTypeWrapper<Category>,
+  OpenSearchOptions: OpenSearchOptions,
+  Profile: Profile,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
   RandomActionOptions: RandomActionOptions,
   FilterRedirect: FilterRedirect,
@@ -332,10 +378,13 @@ export type ResolversParentTypes = {
   WikipediaAPILanguage: WikipediaApiLanguage,
   Actions: Actions,
   String: $ElementType<Scalars, 'String'>,
-  OpenSearchOptions: OpenSearchOptions,
+  categoriesOptions: CategoriesOptions,
   Int: $ElementType<Scalars, 'Int'>,
-  Profile: Profile,
   Boolean: $ElementType<Scalars, 'Boolean'>,
+  Order: Order,
+  Category: Category,
+  OpenSearchOptions: OpenSearchOptions,
+  Profile: Profile,
   OpenSearchResults: OpenSearchResults,
   RandomActionOptions: RandomActionOptions,
   FilterRedirect: FilterRedirect,
@@ -343,8 +392,15 @@ export type ResolversParentTypes = {
 };
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Actions'>> = {
+  categories?: Resolver<?Array<?$ElementType<ResolversTypes, 'Category'>>, ParentType, ContextType, $RequireFields<ActionsCategoriesArgs, { title: * }>>,
   openSearch?: Resolver<?Array<?$ElementType<ResolversTypes, 'OpenSearchResults'>>, ParentType, ContextType, $RequireFields<ActionsOpenSearchArgs, { searchString: * }>>,
   random?: Resolver<?Array<?$ElementType<ResolversTypes, 'RandomActionResults'>>, ParentType, ContextType, ActionsRandomArgs>,
+};
+
+export type CategoryResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Category'>> = {
+  ns?: Resolver<$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
+  title?: Resolver<$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+  timestamp?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'OpenSearchResults'>> = {
@@ -365,6 +421,7 @@ export type RandomActionResultsResolvers<ContextType = APIEmbeddedContext, Paren
 
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
+  Category?: CategoryResolvers<ContextType>,
   OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   RandomActionResults?: RandomActionResultsResolvers<ContextType>,

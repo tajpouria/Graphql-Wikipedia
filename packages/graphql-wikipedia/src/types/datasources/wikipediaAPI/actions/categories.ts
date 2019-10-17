@@ -15,7 +15,7 @@ export interface Category {
 export interface CategoriesResponse {
     query: {
         pages: {
-            [key: string]: {
+            [id: string]: {
                 categories: Category[];
                 [key: string]: any;
             };
@@ -25,4 +25,4 @@ export interface CategoriesResponse {
     [key: string]: any;
 }
 
-export type ParsedCategoriesResponse = { [id: string]: Category[] };
+export type ParsedCategoriesResponse = Category[];

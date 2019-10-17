@@ -15,9 +15,9 @@ export class WikimediaActionsResponseParser {
     public static categories = ({
         query: { pages },
     }: CategoriesResponse): ParsedCategoriesResponse => {
-        const results: ParsedCategoriesResponse = {};
+        const results: ParsedCategoriesResponse = [];
         Object.keys(pages).forEach(key => {
-            results[key] = pages[key].categories;
+            results.push(...pages[key].categories);
         });
 
         return results;

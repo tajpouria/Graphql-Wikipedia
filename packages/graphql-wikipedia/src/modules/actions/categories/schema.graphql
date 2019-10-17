@@ -1,0 +1,23 @@
+type Actions {
+    categories(
+        "Pattern to search categories belong to it."
+        title: String!
+        "Customize category searching behaviors."
+        options: categoriesOptions
+    ): [Category]
+}
+
+input categoriesOptions {
+    "Maximum number of results to return.Default:10"
+    limit: Int
+    "Adds timestamp of when the category was added.Default:false"
+    timeStamp: Boolean
+    "The direction in which to list.Default:'ascending'"
+    order: Order
+}
+
+type Category {
+    ns: Int!
+    title: String!
+    timestamp: String
+}

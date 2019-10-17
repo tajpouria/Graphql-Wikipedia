@@ -22,3 +22,11 @@ enum Profile {
     classic
     engine_autoselect
 }
+
+"""
+The direction in which to list.
+"""
+enum Order {
+    ascending
+    descending
+}
