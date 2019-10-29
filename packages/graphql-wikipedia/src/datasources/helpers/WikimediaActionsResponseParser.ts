@@ -8,14 +8,18 @@ import {
 } from "../../types/datasources/wikipediaAPI/actions/Random";
 import {
     CategoriesResponse,
-    ParsedCategoriesResponse,
+    CategoriesParsedResponse,
 } from "../../types/datasources/wikipediaAPI/actions/categories";
+import {
+    GeoSearchResponse,
+    GeoSearchOptionsParsedResponse,
+} from "../../types/datasources/wikipediaAPI/actions/geosearch";
 
 export class WikimediaActionsResponseParser {
     public static categories = ({
         query: { pages },
-    }: CategoriesResponse): ParsedCategoriesResponse => {
-        const results: ParsedCategoriesResponse = [];
+    }: CategoriesResponse): CategoriesParsedResponse => {
+        const results: CategoriesParsedResponse = [];
         Object.keys(pages).forEach(key => {
             results.push(...pages[key].categories);
         });
@@ -40,4 +44,8 @@ export class WikimediaActionsResponseParser {
 
     public static random = (data: RandomResponse): RandomParsedResponse =>
         data.query.random;
+
+    public static geoSearch = (
+        data: GeoSearchResponse,
+    ): GeoSearchOptionsParsedResponse => data.query && data.query.geosearch;
 }

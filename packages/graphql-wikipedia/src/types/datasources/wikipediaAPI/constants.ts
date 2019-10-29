@@ -1,26 +1,7 @@
-export type WikipediaApiLanguage = "en" | "nl";
-
 export enum Actions {
     openSearch = "?action=opensearch&",
     query = "?action=query&",
 }
-
-export enum ResponseFormat {
-    "json" = "json",
-    "jsonfm" = "jsonfm",
-    "xml" = "xml",
-    "xmlfm" = "xmlfm",
-}
-
-export type Profile =
-    | "strict" // Strict profile with few punctuation characters removed but diacritics and stress marks are kept,
-    | "normal" // Few punctuation characters, some diacritics and stopwords removed.
-    | "fuzzy" // Similar to normal with typo correction (two typos supported).
-    | "fast-fuzzy" // Experimental fuzzy profile (may be removed at any time).
-    | "classic" // Classic prefix, few punctuation characters and some diacritics removed.
-    | "engine_autoselect"; // Let the search engine decide on the best profile to use.
-
-export type Order = "ascending" | "descending";
 
 export type Namespace =
     | "*"
@@ -56,3 +37,51 @@ export type Namespace =
     | 2301
     | 2302
     | 2303;
+
+export type Order = "ascending" | "descending";
+
+export type Profile =
+    | "strict" // Strict profile with few punctuation characters removed but diacritics and stress marks are kept,
+    | "normal" // Few punctuation characters, some diacritics and stopwords removed.
+    | "fuzzy" // Similar to normal with typo correction (two typos supported).
+    | "fast-fuzzy" // Experimental fuzzy profile (may be removed at any time).
+    | "classic" // Classic prefix, few punctuation characters and some diacritics removed.
+    | "engine_autoselect"; // Let the search engine decide on the best profile to use.
+
+export enum ResponseFormat {
+    "json" = "json",
+    "jsonfm" = "jsonfm",
+    "xml" = "xml",
+    "xmlfm" = "xmlfm",
+}
+
+export type Globe =
+    | "earth"
+    | "mercury"
+    | "venus"
+    | "moon"
+    | "mars"
+    | "phobos"
+    | "deimos"
+    | "ganymede"
+    | "callisto"
+    | "io"
+    | "europa"
+    | "mimas"
+    | "enceladus"
+    | "tethys"
+    | "dione"
+    | "rhea"
+    | "titan"
+    | "hyperion"
+    | "iapetus"
+    | "phoebe"
+    | "miranda"
+    | "ariel"
+    | "umbriel"
+    | "titania"
+    | "oberon"
+    | "triton"
+    | "pluto";
+
+export type WikipediaApiLanguage = "en" | "nl";

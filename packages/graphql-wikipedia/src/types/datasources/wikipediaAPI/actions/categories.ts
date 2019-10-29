@@ -25,4 +25,10 @@ export interface CategoriesResponse {
     [key: string]: any;
 }
 
-export type ParsedCategoriesResponse = Category[];
+export type CategoriesParsedResponse = Category[];
+
+export const categoriesOptionsDefaultValues: CategoriesOptions = {
+    limit: 10,
+    timeStamp: false,
+    order: "ascending",
+};

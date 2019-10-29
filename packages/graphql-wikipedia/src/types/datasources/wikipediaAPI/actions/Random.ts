@@ -21,3 +21,9 @@ export interface RandomResponse {
 }
 
 export type RandomParsedResponse = randomArticles[] | [];
+
+export const randomOptionsDefaultValues: RandomOptions = {
+    namespace: "*",
+    filterRedirect: "nonredirects",
+    limit: 10,
+};

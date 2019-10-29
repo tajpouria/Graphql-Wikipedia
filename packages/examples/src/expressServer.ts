@@ -26,6 +26,17 @@ app.get("/random", async (_req, res: Response) => {
     res.json(data);
 });
 
+app.get("/geoSearch", async (_req, res: Response) => {
+    const data = await wikipediaAPI.geoSearch(
+        {
+            latitude: 37.766666666666666,
+            longitude: 122.43333333333334,
+        },
+        { globe: "ganymede" },
+    );
+    res.json(data);
+});
+
 const port = process.env.EXPRESS_SERVER;
 
 if (port) {

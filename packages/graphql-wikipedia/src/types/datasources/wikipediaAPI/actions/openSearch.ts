@@ -17,3 +17,11 @@ export type OpenSearchParsedResponse =
           link: string;
       }>
     | [];
+
+export const openSearchOptionsDefaultValues: OpenSearchOptions = {
+    namespace: 0,
+    limit: 10,
+    profile: "engine_autoselect",
+    suggest: true,
+    warningsaserror: false,
+};
