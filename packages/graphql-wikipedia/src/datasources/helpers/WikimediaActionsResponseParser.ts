@@ -47,5 +47,12 @@ export class WikimediaActionsResponseParser {
 
     public static geoSearch = (
         data: GeoSearchResponse,
-    ): GeoSearchOptionsParsedResponse => data.query && data.query.geosearch;
+    ): GeoSearchOptionsParsedResponse => {
+        try {
+            return data.query.geosearch;
+        } catch (err) {
+            console.error(err);
+            throw new Error(err);
+        }
+    };
 }
