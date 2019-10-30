@@ -1,0 +1,92 @@
+type Actions {
+    """
+    Returns pages having coordinates that are located in a certain area.
+    """
+    geoSearch(
+        "Coordinate around which to search."
+        coordinate: Coordinate
+        options: GeoSearchOptions
+    ): [GeoSearchResutls]
+}
+
+type GeoSearchResutls {
+    pageid: Int
+    ns: Int
+    title: String
+    lat: Float 
+    lon: Float 
+    dis: Int
+    primary: String
+}
+
+input Coordinate {
+    "Coordinate latitude."
+    latitude: Float
+    "Coordinate longitude."
+    longitude: Float
+    "Bounding box to search in."
+    bBox: BBox
+}
+
+input BBox {
+    top: Float!
+    left: Float!
+    bottom: Float!
+    right: Float!
+}
+"""
+Customize GeoSearch behaviours.
+"""
+input GeoSearchOptions {
+    "Search radius in meters.The value must be between 10 and 10,000.Default:500"
+    radius: Int = 500
+    "Globe to search on.Default: earth.earth|mercury|venus|moon|mars|phobos|deimos|ganymede|callisto|io|europa|mimas|enceladus|tethys|dione|rhea|titan|hyperion|iapetus|phoebe|miranda|ariel|umbriel|titania|oberon|triton|pluto"
+    globe: Globe = earth
+    "Restrict search to objects no larger than this, in meters.Default:10000"
+    maxDimension: Int = 10000
+    "Which kind of coordinates to return.Default:primary.primary:The location of the subject of the article.There is at most one primary coordinate per title | secondary:The location of some object that's mentioned in the article. Any number of secondary coordinates can be associated with a title | all:Return both primary and secondary coordinates."
+    coordinatesKind: CoordinatesKind = primary
+    "Maximum number of results to return.No more than 500 allowed.Default:10"
+    limit: Int = 10
+    "Return pages in these namespaces only.Default:0(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|710|711|828|829|2300|2301|2302|2303|'*')"
+    namespace: Int = 0
+}
+
+enum Globe {
+    earth
+    mercury
+    venus
+    moon
+    mars
+    phobos
+    deimos
+    ganymede
+    callisto
+    io
+    europa
+    mimas
+    enceladus
+    tethys
+    dione
+    rhea
+    titan
+    hyperion
+    iapetus
+    phoebe
+    miranda
+    ariel
+    umbriel
+    titania
+    oberon
+    triton
+    pluto
+}
+
+enum CoordinatesKind {
+    "primary:The location of the subject of the article."
+    primary
+    "secondary:The location of some object that's mentioned in the article. Any number of secondary coordinates can be associated with a title."
+    secondary
+    "all:Return both primary and secondary coordinates."
+    all
+}

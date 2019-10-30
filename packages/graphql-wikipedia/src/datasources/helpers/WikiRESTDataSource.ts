@@ -25,6 +25,7 @@ export abstract class WikiRESTDataSource {
                     ResponseFormat.json
                 }`,
             );
+
             return response;
         } catch (err) {
             throw new Error(err);

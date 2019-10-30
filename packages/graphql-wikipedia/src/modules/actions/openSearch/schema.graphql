@@ -5,7 +5,6 @@ type Actions {
     openSearch(
         "Search string.This parameter is required."
         searchString: String!
-        "Customize openSearch behaviours."
         options: OpenSearchOptions
     ): [OpenSearchResults]
 }

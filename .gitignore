@@ -1,8 +1,9 @@
 # dependencies
 **/node_modules
 
-# testing
+# testing and dubugging
 /coverage
+**/.vscode
 
 # production
 packages/*/lib
@@ -20,9 +21,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-#lock
+# lock
 **/package-lock.json
 **/yarn.lock
 
-#docs
+# docs
 docs/

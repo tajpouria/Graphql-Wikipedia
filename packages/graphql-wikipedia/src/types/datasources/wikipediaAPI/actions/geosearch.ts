@@ -39,7 +39,7 @@ export interface GeoSearchResponse {
     query: { geosearch: GeoSearch[] };
 }
 
-export type GeoSearchOptionsParsedResponse = Array<GeoSearch>;
+export type GeoSearchParsedResponse = Array<GeoSearch>;
 
 export const geoSearchOptionsDefaultValues: GeoSearchOptions = {
     radius: 500,

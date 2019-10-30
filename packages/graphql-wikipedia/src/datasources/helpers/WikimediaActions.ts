@@ -169,7 +169,8 @@ export abstract class WikimediaActions extends WikiRESTDataSource {
         }: GeoSearchOptions = geoSearchOptionsDefaultValues,
     ) => {
         const response = await this.httpGET<GeoSearchResponse>(Actions.query, {
-            gscoord: [latitude, longitude].join("|"), // order matters
+            gscoord:
+                latitude && longitude ? [latitude, longitude].join("|") : "", // order matters
             gsbbox: bBox
                 ? [bBox.top, bBox.left, bBox.bottom, bBox.right].join("|")
                 : "", // order matters

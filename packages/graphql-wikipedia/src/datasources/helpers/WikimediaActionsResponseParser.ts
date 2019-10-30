@@ -12,7 +12,7 @@ import {
 } from "../../types/datasources/wikipediaAPI/actions/categories";
 import {
     GeoSearchResponse,
-    GeoSearchOptionsParsedResponse,
+    GeoSearchParsedResponse,
 } from "../../types/datasources/wikipediaAPI/actions/geosearch";
 
 export class WikimediaActionsResponseParser {
@@ -47,7 +47,7 @@ export class WikimediaActionsResponseParser {
 
     public static geoSearch = (
         data: GeoSearchResponse,
-    ): GeoSearchOptionsParsedResponse => {
+    ): GeoSearchParsedResponse => {
         try {
             return data.query.geosearch;
         } catch (err) {

@@ -17,6 +17,8 @@ export type Scalars = {
 export type Actions = {
    __typename?: 'Actions',
   categories?: Maybe<Array<Maybe<Category>>>,
+  /** Returns pages having coordinates that are located in a certain area. */
+  geoSearch?: Maybe<Array<Maybe<GeoSearchResutls>>>,
   /** Search the wiki using the OpenSearch protocol. */
   openSearch?: Maybe<Array<Maybe<OpenSearchResults>>>,
   /** Get a set of random pages. */
@@ -30,6 +32,12 @@ export type ActionsCategoriesArgs = {
 };
 
 
+export type ActionsGeoSearchArgs = {
+  coordinate?: Maybe<Coordinate>,
+  options?: Maybe<GeoSearchOptions>
+};
+
+
 export type ActionsOpenSearchArgs = {
   searchString: Scalars['String'],
   options?: Maybe<OpenSearchOptions>
@@ -40,6 +48,14 @@ export type ActionsRandomArgs = {
   options?: Maybe<RandomActionOptions>
 };
 
+export type BBox = {
+  top: Scalars['Float'],
+  left: Scalars['Float'],
+  bottom: Scalars['Float'],
+  right: Scalars['Float'],
+};
+
+/** Customize categoriesAction behaviours. */
 export type CategoriesOptions = {
   /** Maximum number of results to return.Default:10 */
   limit?: Maybe<Scalars['Int']>,
@@ -56,10 +72,94 @@ export type Category = {
   timestamp?: Maybe<Scalars['String']>,
 };
 
+export type Coordinate = {
+  /** Coordinate latitude. */
+  latitude?: Maybe<Scalars['Float']>,
+  /** Coordinate longitude. */
+  longitude?: Maybe<Scalars['Float']>,
+  /** Bounding box to search in. */
+  bBox?: Maybe<BBox>,
+};
+
+export enum CoordinatesKind {
+  /** primary:The location of the subject of the article. */
+  Primary = 'primary',
+  /** 
+ * secondary:The location of some object that's mentioned in the article. Any
+   * number of secondary coordinates can be associated with a title.
+ **/
+  Secondary = 'secondary',
+  /** all:Return both primary and secondary coordinates. */
+  All = 'all'
+}
+
 export enum FilterRedirect {
   All = 'all',
   Redirects = 'redirects',
   Nonredirects = 'nonredirects'
+}
+
+/** Customize GeoSearch behaviours. */
+export type GeoSearchOptions = {
+  /** Search radius in meters.The value must be between 10 and 10,000.Default:500 */
+  radius?: Maybe<Scalars['Int']>,
+  /** Globe to search on.Default: earth.earth|mercury|venus|moon|mars|phobos|deimos|ganymede|callisto|io|europa|mimas|enceladus|tethys|dione|rhea|titan|hyperion|iapetus|phoebe|miranda|ariel|umbriel|titania|oberon|triton|pluto */
+  globe?: Maybe<Globe>,
+  /** Restrict search to objects no larger than this, in meters.Default:10000 */
+  maxDimension?: Maybe<Scalars['Int']>,
+  /** 
+ * Which kind of coordinates to return.Default:primary.primary:The location of
+   * the subject of the article.There is at most one primary coordinate per title |
+   * secondary:The location of some object that's mentioned in the article. Any
+   * number of secondary coordinates can be associated with a title | all:Return
+   * both primary and secondary coordinates.
+ **/
+  coordinatesKind?: Maybe<CoordinatesKind>,
+  /** Maximum number of results to return.No more than 500 allowed.Default:10 */
+  limit?: Maybe<Scalars['Int']>,
+  /** Return pages in these namespaces only.Default:0(0|1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|100|101|108|109|118|119|446|447|710|711|828|829|2300|2301|2302|2303|'*') */
+  namespace?: Maybe<Scalars['Int']>,
+};
+
+export type GeoSearchResutls = {
+   __typename?: 'GeoSearchResutls',
+  pageid?: Maybe<Scalars['Int']>,
+  ns?: Maybe<Scalars['Int']>,
+  title?: Maybe<Scalars['String']>,
+  lat?: Maybe<Scalars['Float']>,
+  lon?: Maybe<Scalars['Float']>,
+  dis?: Maybe<Scalars['Int']>,
+  primary?: Maybe<Scalars['String']>,
+};
+
+export enum Globe {
+  Earth = 'earth',
+  Mercury = 'mercury',
+  Venus = 'venus',
+  Moon = 'moon',
+  Mars = 'mars',
+  Phobos = 'phobos',
+  Deimos = 'deimos',
+  Ganymede = 'ganymede',
+  Callisto = 'callisto',
+  Io = 'io',
+  Europa = 'europa',
+  Mimas = 'mimas',
+  Enceladus = 'enceladus',
+  Tethys = 'tethys',
+  Dione = 'dione',
+  Rhea = 'rhea',
+  Titan = 'titan',
+  Hyperion = 'hyperion',
+  Iapetus = 'iapetus',
+  Phoebe = 'phoebe',
+  Miranda = 'miranda',
+  Ariel = 'ariel',
+  Umbriel = 'umbriel',
+  Titania = 'titania',
+  Oberon = 'oberon',
+  Triton = 'triton',
+  Pluto = 'pluto'
 }
 
 /** Customize openSearch behaviours. */
@@ -226,6 +326,13 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
   Order: Order,
   Category: ResolverTypeWrapper<Category>,
+  Coordinate: Coordinate,
+  Float: ResolverTypeWrapper<Scalars['Float']>,
+  BBox: BBox,
+  GeoSearchOptions: GeoSearchOptions,
+  Globe: Globe,
+  CoordinatesKind: CoordinatesKind,
+  GeoSearchResutls: ResolverTypeWrapper<GeoSearchResutls>,
   OpenSearchOptions: OpenSearchOptions,
   Profile: Profile,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
@@ -245,6 +352,13 @@ export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'],
   Order: Order,
   Category: Category,
+  Coordinate: Coordinate,
+  Float: Scalars['Float'],
+  BBox: BBox,
+  GeoSearchOptions: GeoSearchOptions,
+  Globe: Globe,
+  CoordinatesKind: CoordinatesKind,
+  GeoSearchResutls: GeoSearchResutls,
   OpenSearchOptions: OpenSearchOptions,
   Profile: Profile,
   OpenSearchResults: OpenSearchResults,
@@ -255,6 +369,7 @@ export type ResolversParentTypes = {
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['Actions'] = ResolversParentTypes['Actions']> = {
   categories?: Resolver<Maybe<Array<Maybe<ResolversTypes['Category']>>>, ParentType, ContextType, RequireFields<ActionsCategoriesArgs, 'title'>>,
+  geoSearch?: Resolver<Maybe<Array<Maybe<ResolversTypes['GeoSearchResutls']>>>, ParentType, ContextType, ActionsGeoSearchArgs>,
   openSearch?: Resolver<Maybe<Array<Maybe<ResolversTypes['OpenSearchResults']>>>, ParentType, ContextType, RequireFields<ActionsOpenSearchArgs, 'searchString'>>,
   random?: Resolver<Maybe<Array<Maybe<ResolversTypes['RandomActionResults']>>>, ParentType, ContextType, ActionsRandomArgs>,
 };
@@ -263,6 +378,16 @@ export type CategoryResolvers<ContextType = APIEmbeddedContext, ParentType exten
   ns?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   timestamp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+};
+
+export type GeoSearchResutlsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['GeoSearchResutls'] = ResolversParentTypes['GeoSearchResutls']> = {
+  pageid?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  ns?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
+  lat?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>,
+  lon?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>,
+  dis?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>,
+  primary?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType extends ResolversParentTypes['OpenSearchResults'] = ResolversParentTypes['OpenSearchResults']> = {
@@ -284,6 +409,7 @@ export type RandomActionResultsResolvers<ContextType = APIEmbeddedContext, Paren
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
   Category?: CategoryResolvers<ContextType>,
+  GeoSearchResutls?: GeoSearchResutlsResolvers<ContextType>,
   OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   RandomActionResults?: RandomActionResultsResolvers<ContextType>,
@@ -364,6 +490,13 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<$ElementType<Scalars, 'Boolean'>>,
   Order: Order,
   Category: ResolverTypeWrapper<Category>,
+  Coordinate: Coordinate,
+  Float: ResolverTypeWrapper<$ElementType<Scalars, 'Float'>>,
+  BBox: BBox,
+  GeoSearchOptions: GeoSearchOptions,
+  Globe: Globe,
+  CoordinatesKind: CoordinatesKind,
+  GeoSearchResutls: ResolverTypeWrapper<GeoSearchResutls>,
   OpenSearchOptions: OpenSearchOptions,
   Profile: Profile,
   OpenSearchResults: ResolverTypeWrapper<OpenSearchResults>,
@@ -383,6 +516,13 @@ export type ResolversParentTypes = {
   Boolean: $ElementType<Scalars, 'Boolean'>,
   Order: Order,
   Category: Category,
+  Coordinate: Coordinate,
+  Float: $ElementType<Scalars, 'Float'>,
+  BBox: BBox,
+  GeoSearchOptions: GeoSearchOptions,
+  Globe: Globe,
+  CoordinatesKind: CoordinatesKind,
+  GeoSearchResutls: GeoSearchResutls,
   OpenSearchOptions: OpenSearchOptions,
   Profile: Profile,
   OpenSearchResults: OpenSearchResults,
@@ -393,6 +533,7 @@ export type ResolversParentTypes = {
 
 export type ActionsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'Actions'>> = {
   categories?: Resolver<?Array<?$ElementType<ResolversTypes, 'Category'>>, ParentType, ContextType, $RequireFields<ActionsCategoriesArgs, { title: * }>>,
+  geoSearch?: Resolver<?Array<?$ElementType<ResolversTypes, 'GeoSearchResutls'>>, ParentType, ContextType, ActionsGeoSearchArgs>,
   openSearch?: Resolver<?Array<?$ElementType<ResolversTypes, 'OpenSearchResults'>>, ParentType, ContextType, $RequireFields<ActionsOpenSearchArgs, { searchString: * }>>,
   random?: Resolver<?Array<?$ElementType<ResolversTypes, 'RandomActionResults'>>, ParentType, ContextType, ActionsRandomArgs>,
 };
@@ -401,6 +542,16 @@ export type CategoryResolvers<ContextType = APIEmbeddedContext, ParentType = $El
   ns?: Resolver<$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
   title?: Resolver<$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
   timestamp?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+};
+
+export type GeoSearchResutlsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'GeoSearchResutls'>> = {
+  pageid?: Resolver<?$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
+  ns?: Resolver<?$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
+  title?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
+  lat?: Resolver<?$ElementType<ResolversTypes, 'Float'>, ParentType, ContextType>,
+  lon?: Resolver<?$ElementType<ResolversTypes, 'Float'>, ParentType, ContextType>,
+  dis?: Resolver<?$ElementType<ResolversTypes, 'Int'>, ParentType, ContextType>,
+  primary?: Resolver<?$ElementType<ResolversTypes, 'String'>, ParentType, ContextType>,
 };
 
 export type OpenSearchResultsResolvers<ContextType = APIEmbeddedContext, ParentType = $ElementType<ResolversParentTypes, 'OpenSearchResults'>> = {
@@ -422,6 +573,7 @@ export type RandomActionResultsResolvers<ContextType = APIEmbeddedContext, Paren
 export type Resolvers<ContextType = APIEmbeddedContext> = {
   Actions?: ActionsResolvers<ContextType>,
   Category?: CategoryResolvers<ContextType>,
+  GeoSearchResutls?: GeoSearchResutlsResolvers<ContextType>,
   OpenSearchResults?: OpenSearchResultsResolvers<ContextType>,
   Query?: QueryResolvers<ContextType>,
   RandomActionResults?: RandomActionResultsResolvers<ContextType>,

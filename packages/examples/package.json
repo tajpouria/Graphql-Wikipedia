@@ -8,7 +8,8 @@
         "graphql-wikipedia",
         "wikiMediaAPI",
         "apollo-server",
-        "apollo-server-express"
+        "apollo-server-express",
+        "express-server"
     ],
     "author": "tajpouria <tajpouria.dev@gmail.com>",
     "homepage": "http://graphql-wikipedia.github.io",

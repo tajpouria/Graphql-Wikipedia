@@ -7,6 +7,9 @@ type Actions {
     ): [Category]
 }
 
+"""
+Customize categoriesAction behaviours.
+"""
 input categoriesOptions {
     "Maximum number of results to return.Default:10"
     limit: Int
