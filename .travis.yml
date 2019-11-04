@@ -1,0 +1,10 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker build -t tajpouria/examples ./package/examples
+script:
+  - docker run tajpouria/examples npm run test -- --watchAll=false
+branches:
+  except:
+    - experimental 

@@ -1,8 +1,8 @@
 {
-    "name": "@tajpouria/graphql-wikipedia",
-    "version": "1.0.0",
-    "description": "This library provides graphql server type definitions and resolvers for MediaWiki action API",
-    "keywords": [
+  "name": "@tajpouria/graphql-wikipedia",
+  "version": "1.0.0",
+  "description": "This library provides graphql server type definitions and resolvers for MediaWiki action API",
+  "keywords": [
         "graphql",
         "wikipedia",
         "graphql-wikipedia",
@@ -26,7 +26,6 @@
     "scripts": {
         "start:tsc": "tsc -w",
         "copy-static-assets": "ts-node copyStaticAssets.js",
-        "test": "echo \"Error: run tests from root\" && exit 1",
         "gen": "graphql-codegen --config codegen.yml"
     },
     "dependencies": {

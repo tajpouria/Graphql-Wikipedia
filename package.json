@@ -8,9 +8,11 @@
     "private": true,
     "scripts": {
         "bootstrap": "lerna bootstrap",
+        "clean": "lerna clean --yes && rm -rf node_modules",
         "start": "concurrently \"lerna run start:server --stream\" \"lerna run start:tsc\" \"lerna run copy-static-assets --stream\" \"yarn run build:actions-docs\"",
-        "build:actions-docs": "typedoc --module commonjs --excludePrivate --excludeProtected --out docs/1.0.0 packages/graphql-wikipedia/src/datasources/helpers/WikimediaActions.ts"
-
+        "build:actions-docs": "typedoc --module commonjs --excludePrivate --excludeProtected --out docs/1.0.0 packages/graphql-wikipedia/src/datasources/helpers/WikimediaActions.ts",
+        "test": "lerna run test",
+        "lerna": "lerna"
     },
     "devDependencies": {
         "@types/node": "^12.7.11",
