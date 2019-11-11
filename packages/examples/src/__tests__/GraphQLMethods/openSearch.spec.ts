@@ -1,0 +1,1 @@
+it("openSearch graphql search", () => {});

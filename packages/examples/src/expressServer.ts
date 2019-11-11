@@ -1,11 +1,11 @@
-import express, { Response } from "express";
+import express from "express";
 import { WikipediaAPI } from "@tajpouria/graphql-wikipedia";
 
 const app = express();
 
 const wikipediaAPI = new WikipediaAPI();
 
-app.get("/categories", async (_req, res: Response) => {
+app.get("/categories", async (_req, res) => {
     const data = await wikipediaAPI.categories("Albert Einstein", {
         limit: 12,
         order: "descending",
@@ -13,7 +13,7 @@ app.get("/categories", async (_req, res: Response) => {
     res.json(data);
 });
 
-app.get("/openSearch", async (_req, res: Response) => {
+app.get("/openSearch", async (_req, res) => {
     const data = await wikipediaAPI.openSearch("Albert Einstein", {
         limit: 10,
         profile: "fast-fuzzy",
@@ -21,12 +21,12 @@ app.get("/openSearch", async (_req, res: Response) => {
     res.json(data);
 });
 
-app.get("/random", async (_req, res: Response) => {
+app.get("/random", async (_req, res) => {
     const data = await wikipediaAPI.random();
     res.json(data);
 });
 
-app.get("/geoSearch", async (_req, res: Response) => {
+app.get("/geoSearch", async (_req, res) => {
     const data = await wikipediaAPI.geoSearch(
         {
             latitude: 32.4279,
@@ -40,7 +40,7 @@ app.get("/geoSearch", async (_req, res: Response) => {
 const port = process.env.EXPRESS_SERVER;
 
 if (port) {
-    app.listen({ port }, (): void =>
+    app.listen({ port }, () =>
         console.info(`\n🚀 express-server is now running on port ${port}...`),
     );
 } else {
@@ -48,3 +48,5 @@ if (port) {
         `FATAL ERROR: while trying to run server on port ${port}...`,
     );
 }
+
+export { app };

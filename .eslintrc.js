@@ -41,6 +41,7 @@ module.exports = {
         "import/no-dynamic-require": "off",
         "import/no-extraneous-dependencies": "off",
         "operator-linebreak": "off",
+        "linebreak-style": "off",
     },
     settings: {
         "import/resolver": {
