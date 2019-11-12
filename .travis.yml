@@ -4,7 +4,7 @@ services:
 before_install:
   - docker build -t tajpouria/wikipedia_graphql .
 script:
-  - docker run tajpouria/wikipedia_graphql -c "cd packages/examples && npm run test"
+  - docker run tajpouria/wikipedia_graphql yarn run test --scope=@tajpouria/examples
 branches:
   except:
-    - experimental 
+    - experimental
